@@ -1,0 +1,38 @@
+var goods = {
+	# Basic goods
+	"Grain": 10,
+	"Wood": 10,
+	"Stone": 12,
+	"Clay": 12,
+	"Wool": 14,
+	"Fish": 15,
+
+	# Metals and Mining
+	"Coal": 18,
+	"Iron": 25,
+	"Copper": 22,
+	"Salt": 20,
+	"Silver": 60,
+	"Gold": 120,
+
+	# Crafts and Processed Goods
+	"Cloth": 24,
+	"Leather": 28,
+	"Tools": 45,
+	"Pottery": 20,
+	"Furniture": 50,
+	"Paper": 30,
+
+	# Luxury Foods and Stimulants
+	"Meat": 25,
+	"Cheese": 22,
+	"Ale": 18,
+	"Wine": 40,
+	"Honey": 35,
+	"Spices": 85,
+
+	# Luxury goods
+	"Silk": 95,
+	"Jewelry": 150,
+	"Glassware": 65
+	}

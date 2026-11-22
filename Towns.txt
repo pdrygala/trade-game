@@ -1,0 +1,30 @@
+# Wielkie Miasta i Wolne Miasta (styl germańsko-pruski)
+	"Eisenstadt": "Stolica / Wielkie Miasto",
+	"Kaltdorf": "Miasto Przemysłowe",
+	"Falkenburg": "Miasto-Twierdza",
+	"Grauhafen": "Wolne Miasto Portowe",
+	"Rabenheim": "Miasto Kupieckie",
+	"Vogelberg": "Miasto Uniwersyteckie",
+
+	# Twierdze, Strażnice i Warownie Górskie
+	"Khazad-Dorn": "Twierdza Krasnoludów",
+	"Krwawa Przełęcz": "Twierdza Graniczna",
+	"Steinwacht": "Warownia",
+	"Zamek Nachtfels": "Ponura Twierdza",
+	"Żelazna Baszta": "Posterunek Wojskowy",
+
+	# Miasta portowe i rzeczne
+	"Port Valmont": "Port Morski",
+	"Korsarzów": "Port Północny",
+	"Furtberg": "Port Rzeczny",
+	"Nebelhafen": "Zamglony Port",
+
+	# Ponure osady, wsie i miasteczka
+	"Schwarzwald": "Osada Drwali",
+	"Kupfergrube": "Osada Górnicza",
+	"Dornenfeld": "Wieś Rolnicza",
+	"Aschenbrück": "Osada Rzeczna",
+	"Torfmoor": "Osada Torfowa",
+	"Wolfsgrund": "Zubożałe Miasteczko",
+	"Rostkessel": "Osada Hutnicza",
+	"Bitterwasser": "Osada Rybacka"
