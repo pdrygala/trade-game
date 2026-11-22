@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cg1awan2fhcwe"]
+
+[ext_resource type="Script" uid="uid://bmnnlpyg8ckhj" path="res://main.gd" id="1_ig7tw"]
+
+[node name="Node2D" type="Node2D" unique_id=865462854]
+script = ExtResource("1_ig7tw")
+
+[node name="Button" type="Button" parent="." unique_id=414615451]
+offset_left = 399.0
+offset_top = 172.0
+offset_right = 471.0
+offset_bottom = 203.0
+text = "Button"
+
+[node name="GoldLabel" type="Label" parent="." unique_id=2062260321]
+offset_left = 399.0
+offset_top = 141.0
+offset_right = 451.0
+offset_bottom = 164.0
+text = "Gold:"
+
+[node name="GoldValue" type="Label" parent="GoldLabel" unique_id=1768723715]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 56.0
+offset_right = 106.0
+offset_bottom = 25.0
+text = "###"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
