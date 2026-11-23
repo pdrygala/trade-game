@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GoodsData" format=3 uid="uid://boghmvdiqjqtw"]
+
+[ext_resource type="Script" uid="uid://cvsnruaftol4l" path="res://goods_data.gd" id="1_ulf7r"]
+
+[resource]
+script = ExtResource("1_ulf7r")
+item_name = "Fish"
+price = 15
+metadata/_custom_type_script = "uid://cvsnruaftol4l"
