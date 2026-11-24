@@ -1,16 +1,11 @@
 extends Node2D
-# Preload resources
+
+# Exported variables
 @export var goods_list: Array[GoodsData] = []
-
-
+# Public Variables
 var goods: Dictionary = {}
-# Variables
-@onready var gold_label = %GoldValue
-@onready var silver_label = %SilverValue
-@onready var bronze_label = %BronzeValue
 var health: int = 100
-
-var wallet: Money =Money.new(100)
+var wallet: int = 100
 var towns = {
 	"Eisenstadt": "Capital",
 	"Schwarzwald": "Lumberjacks' Settlement",
@@ -54,55 +49,61 @@ var town_modifiers: Dictionary = {
 	}
 }
 
+# Onready variables
+@onready var gold_label: Label = %GoldValue
+@onready var silver_label: Label = %SilverValue
+@onready var bronze_label: Label = %BronzeValue
+
+
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:	
+func _ready() -> void:
 	load_goods()
 	print("Health:", health)
-		
 	run_calc_money_tests()
 	update_ui()
 	run_item_tests()
 	test_town_prices()
 
 
-func load_goods() -> void:
-	for res in goods_list:
-		if res == null:
-			continue
-		var key: String = res.get("item_name")
-		goods[key] = res.price
-
-
 func _on_button_pressed() -> void:
-	wallet.wallet += 1
+	wallet += 1
 	update_ui()
 
 
+func load_goods() -> void:
+	for res in goods_list:
+		if res == null:
+			push_error("Empty value in goods dictionary")
+			break
+		if goods.has(res.item_name):
+			push_error("Duplicated value in goods dictionary")
+			break
+		var key: String = res.item_name
+		goods[key] = res.price
+
+
 func update_ui() -> void:
-	var counted_money: Dictionary = Money.calc_money(wallet.wallet)
+	var counted_money: Dictionary = Money.calc_money(wallet)
 	bronze_label.text = str(counted_money["Bronze"])
 	silver_label.text = str(counted_money["Silver"])
 	gold_label.text = str(counted_money["Gold"])
 
 
 func local_price(town: String, item: String) -> float:
-	var price: float
-	var towntype: String
-	
 	# Checking if town exist
 	if not towns.has(town):
 		push_error("There is no such city: ", str(town))
 		return 0
-	towntype = towns[town]
-	
-	# Checking if item exits
+	var towntype: String = towns[town]
+
+	# Checking if item exists
 	if not goods.has(item):
 		push_error("There is no such item: ", str(item))
 		return 0
-	
-	price = goods[item] * town_modifiers[towntype].get(item, 1.0)
+
+	var price: float = goods[item] * town_modifiers[towntype].get(item, 1.0)
 	return price
-		
+
 
 func run_item_tests() -> void:
 	assert(not goods.is_empty(), "Goods dictionary should not be empty")
@@ -112,7 +113,7 @@ func run_item_tests() -> void:
 		assert(price is int, "Wrong item price type for %s, int is expected" % item)
 		assert(price > 0, "Price for an item %s should be bigger than 0" % item)
 
-
+# This function need to be rewritten into proper test function
 func test_town_prices() -> void:
 	for town in towns:
 		for item in goods:
