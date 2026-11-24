@@ -1,12 +1,7 @@
 extends Node2D
-
 # Preload resources
-var clay = preload("res://data/goods/Clay.tres")
-var fish = preload("res://data/goods/Fish.tres")
-var grain = preload("res://data/goods/Grain.tres")
-var stone = preload("res://data/goods/Stone.tres")
-var wood = preload("res://data/goods/Wood.tres")
-var wool = preload("res://data/goods/Wool.tres")
+@export var goods_list: Array[GoodsData] = []
+
 
 var goods: Dictionary = {}
 # Variables
@@ -15,11 +10,7 @@ var goods: Dictionary = {}
 @onready var bronze_label = %BronzeValue
 var health: int = 100
 
-# Money variables
-var wallet: int = 100
-const SILVER_TO_BRONZE: int = 12
-const GOLD_TO_BRONZE: int = 240
-
+var wallet: Money =Money.new(100)
 var towns = {
 	"Eisenstadt": "Capital",
 	"Schwarzwald": "Lumberjacks' Settlement",
@@ -64,29 +55,31 @@ var town_modifiers: Dictionary = {
 }
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	goods[clay.item_name] = clay.price
-	goods[fish.item_name] = fish.price
-	goods[grain.item_name] = grain.price
-	goods[stone.item_name] = stone.price
-	goods[wood.item_name] = wood.price
-	goods[wool.item_name] = wool.price
-	
+func _ready() -> void:	
+	load_goods()
 	print("Health:", health)
-	
+		
 	run_calc_money_tests()
 	update_ui()
 	run_item_tests()
 	test_town_prices()
 
 
+func load_goods() -> void:
+	for res in goods_list:
+		if res == null:
+			continue
+		var key: String = res.get("item_name")
+		goods[key] = res.price
+
+
 func _on_button_pressed() -> void:
-	wallet += 1
+	wallet.wallet += 1
 	update_ui()
 
 
 func update_ui() -> void:
-	var counted_money: Dictionary = calc_money(wallet)
+	var counted_money: Dictionary = Money.calc_money(wallet.wallet)
 	bronze_label.text = str(counted_money["Bronze"])
 	silver_label.text = str(counted_money["Silver"])
 	gold_label.text = str(counted_money["Gold"])
@@ -127,34 +120,10 @@ func test_town_prices() -> void:
 
 
 func run_calc_money_tests() -> void:
-	test_calc_money(0, {"Gold": 0, "Silver": 0, "Bronze": 0})
-	test_calc_money(11, {"Gold": 0, "Silver": 0, "Bronze": 11})
-	test_calc_money(12, {"Gold": 0, "Silver": 1, "Bronze": 0})
-	test_calc_money(239, {"Gold": 0, "Silver": 19, "Bronze": 11})
-	test_calc_money(240, {"Gold": 1, "Silver": 0, "Bronze": 0})
-	test_calc_money(241, {"Gold": 1, "Silver": 0, "Bronze": 1})
-	test_calc_money(5000, {"Gold": 20, "Silver": 16, "Bronze": 8})
-
-
-func test_calc_money(bronze_input: int, expected: Dictionary) -> void:
-	var result: Dictionary = calc_money(bronze_input)
-	assert(
-		result == expected,
-		"Error while calculating money tests: Expected %s, Given %s" % [expected, result]
-	)
-
-
-func calc_money(bronze_input: int) -> Dictionary:
-	var bronze: int = bronze_input
-	var dict_money: Dictionary = {}
-	
-	@warning_ignore("integer_division")
-	var gold: int = bronze / GOLD_TO_BRONZE
-	bronze %= GOLD_TO_BRONZE
-	@warning_ignore("integer_division")
-	var silver: int = bronze / SILVER_TO_BRONZE
-	bronze %= SILVER_TO_BRONZE
-	dict_money["Gold"] = gold
-	dict_money["Silver"] = silver
-	dict_money["Bronze"] = bronze
-	return dict_money
+	Money.test_calc_money(0, {"Gold": 0, "Silver": 0, "Bronze": 0})
+	Money.test_calc_money(11, {"Gold": 0, "Silver": 0, "Bronze": 11})
+	Money.test_calc_money(12, {"Gold": 0, "Silver": 1, "Bronze": 0})
+	Money.test_calc_money(239, {"Gold": 0, "Silver": 19, "Bronze": 11})
+	Money.test_calc_money(240, {"Gold": 1, "Silver": 0, "Bronze": 0})
+	Money.test_calc_money(241, {"Gold": 1, "Silver": 0, "Bronze": 1})
+	Money.test_calc_money(5000, {"Gold": 20, "Silver": 16, "Bronze": 8})

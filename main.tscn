@@ -1,9 +1,17 @@
 [gd_scene format=3 uid="uid://cg1awan2fhcwe"]
 
-[ext_resource type="Script" uid="uid://bmnnlpyg8ckhj" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bmnnlpyg8ckhj" path="res://scripts/main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cvsnruaftol4l" path="res://scripts/goods_data.gd" id="2_0xm2m"]
+[ext_resource type="Resource" uid="uid://dtuh6s4msewit" path="res://data/goods/Clay.tres" id="3_h2yge"]
+[ext_resource type="Resource" uid="uid://boghmvdiqjqtw" path="res://data/goods/Fish.tres" id="4_5vw27"]
+[ext_resource type="Resource" uid="uid://crn7rof8l1b6m" path="res://data/goods/Wood.tres" id="5_kek77"]
+[ext_resource type="Resource" uid="uid://c1k05x6xfld3w" path="res://data/goods/Wool.tres" id="6_4c57u"]
+[ext_resource type="Resource" uid="uid://h787x86knybk" path="res://data/goods/Grain.tres" id="7_efxa6"]
+[ext_resource type="Resource" uid="uid://nm7y6hvhm02q" path="res://data/goods/Stone.tres" id="8_dg77c"]
 
 [node name="Node2D" type="Node2D" unique_id=865462854]
 script = ExtResource("1_ig7tw")
+goods_list = Array[ExtResource("2_0xm2m")]([ExtResource("8_dg77c"), ExtResource("3_h2yge"), ExtResource("7_efxa6"), ExtResource("6_4c57u"), ExtResource("5_kek77"), ExtResource("4_5vw27")])
 
 [node name="Button" type="Button" parent="." unique_id=414615451]
 offset_left = 399.0
