@@ -17,17 +17,15 @@ var health: int = 100
 
 # Money variables
 var wallet: int = 100
-const bronze_to_silver: int = 12
-const bronze_to_gold: int = 240
-
-var counted_money: Dictionary = {}
+const SILVER_TO_BRONZE: int = 12
+const GOLD_TO_BRONZE: int = 240
 
 var towns = {
-	"Eisenstadt":"Capital",
-	"Schwarzwald":"Lumberjacks' Settlement",
-	"Dornenfeld":"Farming Village",
-	"Kupfergrube":"Miners' Settlement",
-	"Grauhafen":"Fishing Settlement"
+	"Eisenstadt": "Capital",
+	"Schwarzwald": "Lumberjacks' Settlement",
+	"Dornenfeld": "Farming Village",
+	"Kupfergrube": "Miners' Settlement",
+	"Grauhafen": "Fishing Settlement"
 }
 
 var town_modifiers: Dictionary = {
@@ -62,7 +60,7 @@ var town_modifiers: Dictionary = {
 		"Wood": 1.2,
 		"Wool": 1.2,
 		"Fish": 0.8
-	}	
+	}
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -75,15 +73,11 @@ func _ready() -> void:
 	goods[wool.item_name] = wool.price
 	
 	print("Health:", health)
-	print_money(wallet)
+	
+	run_calc_money_tests()
 	update_ui()
-	test_item()
+	run_item_tests()
 	test_town_prices()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
 
 
 func _on_button_pressed() -> void:
@@ -92,10 +86,7 @@ func _on_button_pressed() -> void:
 
 
 func update_ui() -> void:
-	counted_money= calc_money(wallet,counted_money)
-	if not counted_money.has("Gold") or not counted_money.has("Silver") or not counted_money.has("Bronze"):
-		push_error("Error after calculating money")
-		pass
+	var counted_money: Dictionary = calc_money(wallet)
 	bronze_label.text = str(counted_money["Bronze"])
 	silver_label.text = str(counted_money["Silver"])
 	gold_label.text = str(counted_money["Gold"])
@@ -116,35 +107,54 @@ func local_price(town: String, item: String) -> float:
 		push_error("There is no such item: ", str(item))
 		return 0
 	
-	price = goods[item] * town_modifiers[towntype].get(item,1.0)
+	price = goods[item] * town_modifiers[towntype].get(item, 1.0)
 	return price
 		
 
-func test_item() -> void:
+func run_item_tests() -> void:
+	assert(not goods.is_empty(), "Goods dictionary should not be empty")
 	for item in goods:
-		print(item,": ", goods[item], " b")
+		var price: Variant = goods[item]
+		assert(item is String and not item.is_empty(), "Wrong item name")
+		assert(price is int, "Wrong item price type for %s, int is expected" % item)
+		assert(price > 0, "Price for an item %s should be bigger than 0" % item)
 
 
 func test_town_prices() -> void:
 	for town in towns:
 		for item in goods:
-			print(town, " price of ", item, ": ", local_price(town,item))
+			print(town, " price of ", item, ": ", local_price(town, item))
 
 
-func print_money(b: int) -> void:
-	counted_money= calc_money(b,counted_money)
-	print("Gold: ",counted_money["Gold"],"g, Silver: ",counted_money["Silver"],"s, Bronze: ",counted_money["Bronze"], "b")
+func run_calc_money_tests() -> void:
+	test_calc_money(0, {"Gold": 0, "Silver": 0, "Bronze": 0})
+	test_calc_money(11, {"Gold": 0, "Silver": 0, "Bronze": 11})
+	test_calc_money(12, {"Gold": 0, "Silver": 1, "Bronze": 0})
+	test_calc_money(239, {"Gold": 0, "Silver": 19, "Bronze": 11})
+	test_calc_money(240, {"Gold": 1, "Silver": 0, "Bronze": 0})
+	test_calc_money(241, {"Gold": 1, "Silver": 0, "Bronze": 1})
+	test_calc_money(5000, {"Gold": 20, "Silver": 16, "Bronze": 8})
+
+
+func test_calc_money(bronze_input: int, expected: Dictionary) -> void:
+	var result: Dictionary = calc_money(bronze_input)
+	assert(
+		result == expected,
+		"Error while calculating money tests: Expected %s, Given %s" % [expected, result]
+	)
+
+
+func calc_money(bronze_input: int) -> Dictionary:
+	var bronze: int = bronze_input
+	var dict_money: Dictionary = {}
 	
-
-
-func calc_money (bronze: int, dict: Dictionary) -> Dictionary:
 	@warning_ignore("integer_division")
-	var gold: int = bronze/bronze_to_gold
-	bronze %= bronze_to_gold
+	var gold: int = bronze / GOLD_TO_BRONZE
+	bronze %= GOLD_TO_BRONZE
 	@warning_ignore("integer_division")
-	var silver: int = bronze/bronze_to_silver
-	bronze %= bronze_to_silver
-	dict["Gold"] = gold
-	dict["Silver"] = silver
-	dict["Bronze"] = bronze
-	return dict
+	var silver: int = bronze / SILVER_TO_BRONZE
+	bronze %= SILVER_TO_BRONZE
+	dict_money["Gold"] = gold
+	dict_money["Silver"] = silver
+	dict_money["Bronze"] = bronze
+	return dict_money
