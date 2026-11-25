@@ -8,10 +8,17 @@
 [ext_resource type="Resource" uid="uid://c1k05x6xfld3w" path="res://data/goods/Wool.tres" id="6_4c57u"]
 [ext_resource type="Resource" uid="uid://h787x86knybk" path="res://data/goods/Grain.tres" id="7_efxa6"]
 [ext_resource type="Resource" uid="uid://nm7y6hvhm02q" path="res://data/goods/Stone.tres" id="8_dg77c"]
+[ext_resource type="Script" uid="uid://y5rbxook0u75" path="res://scripts/settlement_data.gd" id="9_w48qg"]
+[ext_resource type="Resource" uid="uid://t3bd5axgi6i5" path="res://data/settlements/Eisenstadt.tres" id="10_vivmo"]
+[ext_resource type="Resource" uid="uid://cvtbusk6auvd3" path="res://data/settlements/Grauhafen.tres" id="11_2cqfq"]
+[ext_resource type="Resource" uid="uid://dsbblw264kjd4" path="res://data/settlements/Dornenfeld.tres" id="12_yaehf"]
+[ext_resource type="Resource" uid="uid://bmv84bih2r7s0" path="res://data/settlements/Kupfergrub.tres" id="13_074og"]
+[ext_resource type="Resource" uid="uid://b27putm4k6x5v" path="res://data/settlements/Schwarzwald.tres" id="14_cegan"]
 
 [node name="Node2D" type="Node2D" unique_id=865462854]
 script = ExtResource("1_ig7tw")
 goods_list = Array[ExtResource("2_0xm2m")]([ExtResource("8_dg77c"), ExtResource("3_h2yge"), ExtResource("7_efxa6"), ExtResource("6_4c57u"), ExtResource("5_kek77"), ExtResource("4_5vw27")])
+settlements_list = Array[ExtResource("9_w48qg")]([ExtResource("10_vivmo"), ExtResource("11_2cqfq"), ExtResource("12_yaehf"), ExtResource("13_074og"), ExtResource("14_cegan")])
 
 [node name="Button" type="Button" parent="." unique_id=414615451]
 offset_left = 399.0

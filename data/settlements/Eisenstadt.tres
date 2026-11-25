@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SettlementData" format=3 uid="uid://t3bd5axgi6i5"]
+
+[ext_resource type="Script" uid="uid://y5rbxook0u75" path="res://scripts/settlement_data.gd" id="1_go1dl"]
+
+[resource]
+script = ExtResource("1_go1dl")
+settlement_name = "Eisenstadt"
+settlement_population = 20000
+metadata/_custom_type_script = "uid://y5rbxook0u75"

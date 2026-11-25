@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SettlementData" format=3 uid="uid://cvtbusk6auvd3"]
+
+[ext_resource type="Script" uid="uid://y5rbxook0u75" path="res://scripts/settlement_data.gd" id="1_txlqx"]
+
+[resource]
+script = ExtResource("1_txlqx")
+settlement_name = 4
+settlement_type = 4
+settlement_population = 1850
+metadata/_custom_type_script = "uid://y5rbxook0u75"
