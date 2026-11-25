@@ -59,7 +59,8 @@ func _ready() -> void:
 	run_calc_money_tests()
 	update_ui()
 	run_item_tests()
-	test_town_prices()
+	run_town_prices_tests()
+	run_prices_tests()
 
 
 func _on_button_pressed() -> void:
@@ -95,20 +96,25 @@ func update_ui() -> void:
 	silver_label.text = str(counted_money["Silver"])
 	gold_label.text = str(counted_money["Gold"])
 
+
 func local_price(town: String, item: String) -> int:
 	# Checking if town exists
 	if not settlements.has(town):
-		push_error("There is no such city: %s" %[town])
+		push_error("There is no such city: %s" % [town])
 		return 0
 	var towntype: SettlementData.SettlementType = settlements[town].type
 
 	# Checking if item exists
 	if not goods.has(item):
-		push_error("There is no such item: %s" %[item])
+		push_error("There is no such item: %s" % [item])
 		return 0
 
-	var price: int = round(goods[item] * town_modifiers[towntype].get(item, 1))
-	return price
+	return calc_price(goods[item], town_modifiers[towntype].get(item, 1.0))
+
+
+func calc_price(price: int, modifier: float) -> int:
+	var result: float = price * modifier
+	return maxi(roundi(result), 1)
 
 
 func run_item_tests() -> void:
@@ -120,18 +126,34 @@ func run_item_tests() -> void:
 		assert(price > 0, "Price for an item %s should be bigger than 0" % item)
 
 
-func test_town_prices() -> void:
-	var eisenstadt_grain_price: int = local_price("Eisenstadt", "Grain")
-	var dornenfeld_grain_price: int = local_price("Dornenfeld", "Grain")
-	var schwarzwald_wood_price: int = local_price("Schwarzwald", "Wood")
-	var kupfergrub_stone_price: int = local_price("Kupfergrub", "Stone")
-	var grauhafen_fish_price: int = local_price("Grauhafen", "Fish")
+func run_town_prices_tests() -> void:
+	test_town_prices("Eisenstadt", "Grain", 11)
+	test_town_prices("Dornenfeld", "Grain", 6)
+	test_town_prices("Schwarzwald", "Wood", 7)
+	test_town_prices("Kupfergrub", "Stone", 10)
+	test_town_prices("Grauhafen", "Fish", 12)
 
-	assert(eisenstadt_grain_price == 11, "Wrong Grain price in Eisenstadt, expected: %d given: %d" % [11,eisenstadt_grain_price])
-	assert(dornenfeld_grain_price == 6, "Wrong Grain price in Dornenfeld, expected: %d given: %d" % [6,dornenfeld_grain_price])
-	assert(schwarzwald_wood_price == 7, "Wrong Wood price in Schwarzwald, expected: %d given: %d" % [7,schwarzwald_wood_price])
-	assert(kupfergrub_stone_price == 10, "Wrong Stone price in Kupfergrub, expected: %d given: %d" % [9,kupfergrub_stone_price])
-	assert(grauhafen_fish_price == 12, "Wrong Fish price in Grauhafen, expected: %d given: %d" % [12,grauhafen_fish_price])
+
+func test_town_prices(town: String, item: String, expected: int) -> void:
+	var result: int = local_price(town, item)
+	assert(
+		expected == result,
+		"Wrong %s price in %s, expected: %d given: %d" % [item, town, expected, result]
+	)
+
+
+func run_prices_tests() -> void:
+	test_prices(1, 0.4, 1)
+	test_prices(10, 0.6, 6)
+	test_prices(12, 0.8, 10)
+
+
+func test_prices(base_price: int, modifier: float, expected: int) -> void:
+	var result: int = calc_price(base_price, modifier)
+	assert(
+		expected == result,
+		"Wrong calculated price, for price %d and modifier %f expected: %d given: %d" % [base_price, modifier, expected, result]
+	)
 
 
 func run_calc_money_tests() -> void:
