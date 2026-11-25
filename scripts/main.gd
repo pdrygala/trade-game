@@ -56,11 +56,10 @@ func _ready() -> void:
 	load_goods()
 	load_settlements()
 	print("Health:", health)
-#	print(settlements[])
 	run_calc_money_tests()
 	update_ui()
 	run_item_tests()
-	#test_town_prices()
+	test_town_prices()
 
 
 func _on_button_pressed() -> void:
@@ -76,8 +75,7 @@ func load_goods() -> void:
 		if goods.has(res.item_name):
 			push_error("Duplicated value %s in goods_list" % [res.item_name])
 			break
-		var key: String = res.item_name
-		goods[key] = res.price
+		goods[res.item_name] = res.price
 
 
 func load_settlements() -> void:
@@ -85,10 +83,10 @@ func load_settlements() -> void:
 		if town == null:
 			push_error("Empty value in settlements_list")
 			break
-		if settlements.has(town.SettlementName):
-			push_error("Duplicated value %s in settlements_list" % [town.SettlementName])
+		if settlements.has(town.name):
+			push_error("Duplicated value %s in settlements_list" % [town.name])
 			break
-		settlements[town.SettlementName] = town
+		settlements[town.name] = town
 
 
 func update_ui() -> void:
@@ -97,22 +95,21 @@ func update_ui() -> void:
 	silver_label.text = str(counted_money["Silver"])
 	gold_label.text = str(counted_money["Gold"])
 
+func local_price(town: String, item: String) -> int:
+	# Checking if town exists
+	if not settlements.has(town):
+		push_error("There is no such city: %s" %[town])
+		return 0
+	var towntype: SettlementData.SettlementType = settlements[town].type
 
-#func local_price(town: String, item: String) -> float:
-	## Checking if town exist
-	#if not towns.has(town):
-		#push_error("There is no such city: ", str(town))
-		#return 0
-	#var towntype: String = towns[town]
-#
-	## Checking if item exists
-	#if not goods.has(item):
-		#push_error("There is no such item: ", str(item))
-		#return 0
-#
-	#var price: float = goods[item] * town_modifiers[towntype].get(item, 1.0)
-	#return price
-#
+	# Checking if item exists
+	if not goods.has(item):
+		push_error("There is no such item: %s" %[item])
+		return 0
+
+	var price: int = round(goods[item] * town_modifiers[towntype].get(item, 1))
+	return price
+
 
 func run_item_tests() -> void:
 	assert(not goods.is_empty(), "Goods dictionary should not be empty")
@@ -123,11 +120,18 @@ func run_item_tests() -> void:
 		assert(price > 0, "Price for an item %s should be bigger than 0" % item)
 
 
-# This function need to be rewritten into proper test function
-#func test_town_prices() -> void:
-	#for town in towns:
-		#for item in goods:
-			#print(town, " price of ", item, ": ", local_price(town, item))
+func test_town_prices() -> void:
+	var eisenstadt_grain_price: int = local_price("Eisenstadt", "Grain")
+	var dornenfeld_grain_price: int = local_price("Dornenfeld", "Grain")
+	var schwarzwald_wood_price: int = local_price("Schwarzwald", "Wood")
+	var kupfergrub_stone_price: int = local_price("Kupfergrub", "Stone")
+	var grauhafen_fish_price: int = local_price("Grauhafen", "Fish")
+
+	assert(eisenstadt_grain_price == 11, "Wrong Grain price in Eisenstadt, expected: %d given: %d" % [11,eisenstadt_grain_price])
+	assert(dornenfeld_grain_price == 6, "Wrong Grain price in Dornenfeld, expected: %d given: %d" % [6,dornenfeld_grain_price])
+	assert(schwarzwald_wood_price == 7, "Wrong Wood price in Schwarzwald, expected: %d given: %d" % [7,schwarzwald_wood_price])
+	assert(kupfergrub_stone_price == 10, "Wrong Stone price in Kupfergrub, expected: %d given: %d" % [9,kupfergrub_stone_price])
+	assert(grauhafen_fish_price == 12, "Wrong Fish price in Grauhafen, expected: %d given: %d" % [12,grauhafen_fish_price])
 
 
 func run_calc_money_tests() -> void:

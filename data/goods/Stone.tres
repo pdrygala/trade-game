@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_5ru1p")
 item_name = "Stone"
-price = 10
+price = 12
 metadata/_custom_type_script = "uid://cvsnruaftol4l"

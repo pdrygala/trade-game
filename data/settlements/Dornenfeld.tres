@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_gabab")
-settlement_name = 2
-settlement_type = 2
-settlement_population = 500
+name = "Dornenfeld"
+type = 2
+population = 480
 metadata/_custom_type_script = "uid://y5rbxook0u75"

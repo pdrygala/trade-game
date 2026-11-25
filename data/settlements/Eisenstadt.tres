@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_go1dl")
-settlement_name = "Eisenstadt"
-settlement_population = 20000
+name = "Eisenstadt"
+population = 24500
 metadata/_custom_type_script = "uid://y5rbxook0u75"
