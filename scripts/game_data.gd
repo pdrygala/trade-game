@@ -33,6 +33,7 @@ static func load_resources(path: String, list: Array) -> void:
 		file_name = dir.get_next()
 	dir.list_dir_end()
 
+
 func load_goods() -> void:
 	for res in goods_list:
 		if res == null:
