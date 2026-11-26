@@ -21,7 +21,7 @@ static func run_calc_money_tests() -> void:
 static func run_item_tests() -> void:
 	assert(not GameData.goods.is_empty(), "Goods dictionary should not be empty")
 	for item in GameData.goods:
-		var price: Variant = GameData.goods[item]
+		var price: Variant = GameData.goods[item].price
 		assert(item is String and not item.is_empty(), "Wrong item name")
 		assert(price is int, "Wrong item price type for %s, int is expected" % item)
 		assert(price > 0, "Price for an item %s should be bigger than 0" % item)

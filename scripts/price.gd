@@ -55,7 +55,7 @@ static func local_price(town: String, item: String, settlements: Dictionary, goo
 		push_error("There is no such item: %s" % [item])
 		return 0
 
-	return calc_price(goods[item], town_modifiers[towntype].get(item, 1.0))
+	return calc_price(goods[item].price, town_modifiers[towntype].get(item, 1.0))
 
 
 static func test_prices(base_price: int, modifier: float, expected: int) -> void:

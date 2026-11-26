@@ -12,8 +12,6 @@ var wallet: int = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	GameData.load_resources(GameData.GOODS_DIR,GameData.goods)
-	GameData.load_resources(GameData.SETTLEMENTS_DIR,GameData.settlements)
 	print("Health:", health)
 	update_ui()
 
