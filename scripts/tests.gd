@@ -3,9 +3,9 @@ extends RefCounted
 
 
 static func run_prices_tests() -> void:
-	Price.test_prices(1, 0.4, 1)
-	Price.test_prices(10, 0.6, 6)
-	Price.test_prices(12, 0.8, 10)
+	test_prices(1, 0.4, 1)
+	test_prices(10, 0.6, 6)
+	test_prices(12, 0.8, 10)
 
 
 static func run_calc_money_tests() -> void:
@@ -36,7 +36,7 @@ static func run_town_prices_tests() -> void:
 
 
 static func test_town_prices(town: String, item: String, expected: int) -> void:
-	var result: int = Price.local_price(town, item, GameData.settlements, GameData.goods)
+	var result: int = Price.local_price(town, item)
 	assert(
 		expected == result,
 		"Wrong %s price in %s, expected: %d given: %d" % [item, town, expected, result]
@@ -48,4 +48,12 @@ static func test_calc_money(bronze_input: int, expected: Dictionary) -> void:
 	assert(
 		result == expected,
 		"Error while calculating money tests: Expected %s, Given %s" % [expected, result]
+	)
+
+
+static func test_prices(base_price: int, modifier: float, expected: int) -> void:
+	var result: int = Price.calc_price(base_price, modifier)
+	assert(
+		expected == result,
+		"Wrong calculated price, for price %d and modifier %f expected: %d given: %d" % [base_price, modifier, expected, result]
 	)

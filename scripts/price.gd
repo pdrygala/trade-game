@@ -2,7 +2,7 @@ class_name Price
 extends RefCounted
 
 
-const town_modifiers: Dictionary = {
+const TOWN_MODIFIERS: Dictionary = {
 	SettlementData.SettlementType.CAPITAL: {
 		"Grain": 1.1,
 		"Wood": 1.1,
@@ -43,24 +43,16 @@ static func calc_price(price: int, modifier: float) -> int:
 	return maxi(roundi(result), 1)
 
 
-static func local_price(town: String, item: String, settlements: Dictionary, goods: Dictionary) -> int:
+static func local_price(town: String, item: String) -> int:
 	# Checking if town exists
-	if not settlements.has(town):
+	if not GameData.settlements.has(town):
 		push_error("There is no such city: %s" % [town])
 		return 0
-	var towntype: SettlementData.SettlementType = settlements[town].type
+	var towntype: SettlementData.SettlementType = GameData.settlements[town].type
 
 	# Checking if item exists
-	if not goods.has(item):
+	if not GameData.goods.has(item):
 		push_error("There is no such item: %s" % [item])
 		return 0
 
-	return calc_price(goods[item].price, town_modifiers[towntype].get(item, 1.0))
-
-
-static func test_prices(base_price: int, modifier: float, expected: int) -> void:
-	var result: int = Price.calc_price(base_price, modifier)
-	assert(
-		expected == result,
-		"Wrong calculated price, for price %d and modifier %f expected: %d given: %d" % [base_price, modifier, expected, result]
-	)
+	return calc_price(GameData.goods[item].price, TOWN_MODIFIERS[towntype].get(item, 1.0))

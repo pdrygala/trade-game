@@ -1,21 +1,23 @@
 extends Node
 
+const GOODS_DIR: String = "res://data/goods/"
+const SETTLEMENTS_DIR: String = "res://data/settlements/"
+
 var goods_list: Array[GoodsData] = []
 var settlements_list: Array[SettlementData] = []
 var goods: Dictionary = {}
 var settlements: Dictionary = {}
 
-const GOODS_DIR: String = "res://data/goods/"
-const SETTLEMENTS_DIR: String = "res://data/settlements/"
 
 func _ready() -> void:
-	load_resources(GOODS_DIR,goods_list)
-	load_resources(SETTLEMENTS_DIR,settlements_list)
+	load_resources(GOODS_DIR, goods_list)
+	load_resources(SETTLEMENTS_DIR, settlements_list)
 	load_goods()
 	load_settlements()
 
+
 static func load_resources(path: String, list: Array) -> void:
-	var dir = DirAccess.open(path)
+	var dir: DirAccess = DirAccess.open(path)
 	if not dir:
 		push_error("The folder %s could not be opened" % [path])
 		return
