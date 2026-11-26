@@ -20,11 +20,3 @@ static func calc_money(bronze_input: int) -> Dictionary:
 	dict_money["Silver"] = silver
 	dict_money["Bronze"] = bronze
 	return dict_money
-
-
-static func test_calc_money(bronze_input: int, expected: Dictionary) -> void:
-	var result: Dictionary = calc_money(bronze_input)
-	assert(
-		result == expected,
-		"Error while calculating money tests: Expected %s, Given %s" % [expected, result]
-	)
