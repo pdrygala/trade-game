@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cg1awan2fhcwe"]
+
+[ext_resource type="Script" uid="uid://bmnnlpyg8ckhj" path="res://scripts/main.gd" id="1_ig7tw"]
+
+[node name="Node2D" type="Node2D" unique_id=865462854]
+script = ExtResource("1_ig7tw")
+
+[node name="Button" type="Button" parent="." unique_id=414615451]
+offset_left = 399.0
+offset_top = 172.0
+offset_right = 471.0
+offset_bottom = 203.0
+text = "Button"
+
+[node name="GoldLabel" type="Label" parent="." unique_id=2062260321]
+offset_left = 407.0
+offset_top = 143.0
+offset_right = 459.0
+offset_bottom = 166.0
+text = "Gold:"
+
+[node name="GoldValue" type="Label" parent="GoldLabel" unique_id=1768723715]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 56.0
+offset_right = 106.0
+offset_bottom = 25.0
+text = "###"
+
+[node name="SilverLabel" type="Label" parent="." unique_id=1850545091]
+offset_left = 502.0
+offset_top = 144.0
+offset_right = 554.0
+offset_bottom = 167.0
+text = "Silver:"
+
+[node name="SilverValue" type="Label" parent="SilverLabel" unique_id=1232629553]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 56.0
+offset_right = 106.0
+offset_bottom = 25.0
+text = "###"
+
+[node name="BronzeLabel" type="Label" parent="." unique_id=311520191]
+offset_left = 594.0
+offset_top = 143.0
+offset_right = 653.0
+offset_bottom = 166.0
+text = "Bronze:"
+
+[node name="BronzeValue" type="Label" parent="BronzeLabel" unique_id=832469676]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_right = 114.0
+offset_bottom = 23.0
+text = "###"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

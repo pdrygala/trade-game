@@ -1,11 +1,5 @@
 extends Node2D
 
-# Exported variables
-@export var goods_list: Array[GoodsData] = []
-@export var settlements_list: Array[SettlementData] = []
-# Public Variables
-var goods: Dictionary = {}
-var settlements: Dictionary = {}
 var health: int = 100
 var wallet: int = 100
 
@@ -18,8 +12,8 @@ var wallet: int = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	load_goods()
-	load_settlements()
+	GameData.load_resources(GameData.GOODS_DIR,GameData.goods)
+	GameData.load_resources(GameData.SETTLEMENTS_DIR,GameData.settlements)
 	print("Health:", health)
 	update_ui()
 
@@ -33,28 +27,6 @@ func _ready() -> void:
 func _on_button_pressed() -> void:
 	wallet += 1
 	update_ui()
-
-
-func load_goods() -> void:
-	for res in goods_list:
-		if res == null:
-			push_error("Empty value in goods_list")
-			break
-		if goods.has(res.item_name):
-			push_error("Duplicated value %s in goods_list" % [res.item_name])
-			break
-		goods[res.item_name] = res.price
-
-
-func load_settlements() -> void:
-	for town in settlements_list:
-		if town == null:
-			push_error("Empty value in settlements_list")
-			break
-		if settlements.has(town.name):
-			push_error("Duplicated value %s in settlements_list" % [town.name])
-			break
-		settlements[town.name] = town
 
 
 func update_ui() -> void:

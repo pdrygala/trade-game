@@ -19,9 +19,9 @@ static func run_calc_money_tests() -> void:
 
 
 static func run_item_tests() -> void:
-	assert(not Main.goods.is_empty(), "Goods dictionary should not be empty")
-	for item in Main.goods:
-		var price: Variant = Main.goods[item]
+	assert(not GameData.goods.is_empty(), "Goods dictionary should not be empty")
+	for item in GameData.goods:
+		var price: Variant = GameData.goods[item]
 		assert(item is String and not item.is_empty(), "Wrong item name")
 		assert(price is int, "Wrong item price type for %s, int is expected" % item)
 		assert(price > 0, "Price for an item %s should be bigger than 0" % item)
@@ -36,7 +36,7 @@ static func run_town_prices_tests() -> void:
 
 
 static func test_town_prices(town: String, item: String, expected: int) -> void:
-	var result: int = Price.local_price(town, item, Main.settlements, Main.goods)
+	var result: int = Price.local_price(town, item, GameData.settlements, GameData.goods)
 	assert(
 		expected == result,
 		"Wrong %s price in %s, expected: %d given: %d" % [item, town, expected, result]
