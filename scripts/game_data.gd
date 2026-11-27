@@ -30,8 +30,8 @@ static func load_resources(path: String, list: Array) -> void:
 			var res: Resource = load(full_path)
 			if not res:
 				push_error("Failed to load resource at: %s" % [full_path])
-				return
-			list.append(res)
+			else:
+				list.append(res)
 		file_name = dir.get_next()
 	dir.list_dir_end()
 
