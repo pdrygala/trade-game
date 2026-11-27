@@ -16,10 +16,11 @@ func _ready() -> void:
 	update_ui()
 
 	# Running tests. They will be moved into debug scene
-	Tests.run_calc_money_tests()
-	Tests.run_item_tests()
-	Tests.run_town_prices_tests()
-	Tests.run_prices_tests()
+	Tests.verify_goods_data()
+	Tests.verify_money_conversion()
+	Tests.verify_price_calculations()
+	Tests.verify_town_prices()
+	Tests.verify_settlements_data()
 
 
 func _on_button_pressed() -> void:
