@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoadData" format=3 uid="uid://6qq7h04a0eys"]
+
+[ext_resource type="Script" uid="uid://cpk1lduufxs4u" path="res://scripts/road_data.gd" id="1_3eadt"]
+[ext_resource type="Resource" uid="uid://dsbblw264kjd4" path="res://data/settlements/Dornenfeld.tres" id="2_8vlie"]
+[ext_resource type="Resource" uid="uid://t3bd5axgi6i5" path="res://data/settlements/Eisenstadt.tres" id="2_spj3e"]
+
+[resource]
+script = ExtResource("1_3eadt")
+town_A = ExtResource("2_spj3e")
+town_B = ExtResource("2_8vlie")
+hours_of_travel = 20
+metadata/_custom_type_script = "uid://cpk1lduufxs4u"
